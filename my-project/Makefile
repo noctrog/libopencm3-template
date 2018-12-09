@@ -3,7 +3,7 @@ BUILD_DIR = bin
 
 SHARED_DIR = ../my-common-code
 FREERTOS_DIR = ../FreeRTOS
-CFILES = my-project.c
+CFILES = $(wildcard *.c)
 CFILES += $(notdir $(wildcard $(SHARED_DIR)/*.c))
 CFILES += $(notdir $(wildcard $(FREERTOS_DIR)/*.c))
 

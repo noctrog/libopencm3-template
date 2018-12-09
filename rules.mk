@@ -105,7 +105,8 @@ LDLIBS += -Wl,--start-group -lc -lgcc -lnosys -Wl,--end-group
 %: SCCS/s.%
 
 all: $(PROJECT).elf $(PROJECT).bin
-flash: $(PROJECT).flash
+flash: $(PROJECT).bin
+	@st-flash write $(PROJECT).bin 0x08000000
 
 # error if not using linker script generator
 ifeq (,$(DEVICE))
@@ -130,6 +131,7 @@ $(BUILD_DIR)/%.o: %.cxx
 	$(Q)$(CC) $(TGT_CXXFLAGS) $(CXXFLAGS) $(TGT_CPPFLAGS) $(CPPFLAGS) -o $@ -c $<
 
 $(PROJECT).elf: $(OBJS) $(LDSCRIPT) $(LIBDEPS)
+	@echo "$(OBJS)"
 	@printf "  LD\t$@\n"
 	$(Q)$(LD) $(TGT_LDFLAGS) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $@
 
